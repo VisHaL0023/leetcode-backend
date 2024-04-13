@@ -1,20 +1,19 @@
 import {
     UserRepository,
     OTPRepository,
-    ProfileRepository,
+    ProblemsDataRepository,
 } from "../repositories/index.js";
 import { ServerConfig } from "../config/index.js";
 
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import otpGenerator from "otp-generator";
-import errorObj from "../utils/error-response.js";
 
 class UserService {
     constructor() {
         this.userRepository = new UserRepository();
         this.otpRepository = new OTPRepository();
-        this.profileRepository = new ProfileRepository();
+        this.problemsDataRepository = new ProblemsDataRepository();
     }
 
     async generateJWT(reqbody) {
@@ -56,31 +55,12 @@ class UserService {
                     };
                 }
 
-                // Check if user is "Instructor", if yes then he needs to approve else approved
-                let approved = "";
-                approved =
-                    reqbody.accountType === "Instructor"
-                        ? (approved = false)
-                        : (approved = true);
-
-                // Creating users Profiles
-                const profileDetails = await this.profileRepository.create({
-                    gender: null,
-                    dateOfBirth: null,
-                    contactNumber: null,
-                    about: null,
-                });
-
                 // Creating user
                 const user = await this.userRepository.create({
-                    firstName: reqbody.firstName,
-                    lastName: reqbody.lastName,
+                    name: reqbody.name,
                     email: reqbody.email,
                     password: reqbody.password,
-                    accountType: reqbody.accountType,
-                    approved: approved,
-                    profile: profileDetails._id,
-                    image: "sample", // TODO: needs to add real image
+                    image: reqbody.img || "sample", // TODO: needs to add real image
                 });
                 return user;
             }

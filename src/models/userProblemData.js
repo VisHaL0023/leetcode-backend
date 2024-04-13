@@ -20,7 +20,6 @@ const userProblemDataSchema = new Schema(
         },
         problemId: {
             type: Schema.Types.ObjectId,
-            required: true,
             ref: "Problem",
         },
     },

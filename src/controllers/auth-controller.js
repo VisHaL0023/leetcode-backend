@@ -11,18 +11,10 @@ class AuthController {
     async createUser(req, res) {
         try {
             // destructure all values
-            const { firstName, lastName, email, password, accountType, otp } =
-                req.body;
+            const { name, email, password, otp } = req.body;
 
             // Check if all required fields are present
-            if (
-                !firstName ||
-                !lastName ||
-                !email ||
-                !password ||
-                !accountType ||
-                !otp
-            ) {
+            if (!name || !email || !password || !otp) {
                 errorObj.message = "All fields are required";
                 errorObj.success = false;
                 return res.status(StatusCodes.FORBIDDEN).json(errorObj);
@@ -30,11 +22,9 @@ class AuthController {
 
             // Calling user-service for creating user
             const response = await userService.signUp({
-                firstName,
-                lastName,
+                name,
                 email,
                 password,
-                accountType,
                 otp,
             });
 

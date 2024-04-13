@@ -31,10 +31,10 @@ const userSchema = new Schema(
             default: "User",
             enum: ["User", "Admin"],
         },
-        solvedProblem: [
+        problemsData: [
             {
                 type: Schema.Types.ObjectId,
-                ref: "Problems",
+                ref: "UserProblemData",
             },
         ],
         comment: {
