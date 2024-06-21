@@ -23,6 +23,9 @@ const problemSchema = new Schema(
             type: String,
             required: true,
         },
+        videoId: {
+            type: String,
+        },
         comments: [
             {
                 type: Schema.Types.ObjectId,
