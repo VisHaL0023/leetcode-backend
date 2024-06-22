@@ -48,7 +48,7 @@ class AuthController {
 
             // Checking all required fields are present
             if (!email || !password) {
-                errorObj.message = "All fields are required";
+                errorObj.message = "email and password are required";
                 errorObj.success = false;
                 return res.status(StatusCodes.FORBIDDEN).json(errorObj);
             }
